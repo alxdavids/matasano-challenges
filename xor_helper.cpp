@@ -86,11 +86,14 @@ int* xor_helper::produce_count_array(std::string encrypted_hex) {
 }
 
 void xor_helper::print_candidates(unsigned short possible_char[], std::string encrypted_hex, int hexlen) {
-	for (int j=0; j<26;j++) {
+	for (int j=0; j<256;j++) {
 		unsigned short poss_byte = possible_char[j];
 		int weirdness = 0;
 		std::stringstream hex_stream;
 		hex_stream << std::hex << poss_byte;
+        if (poss_byte < 16) {
+            hex_stream << std::hex << poss_byte;
+        }
 		std::string hex_xor;
 		for (int i=0;i<hexlen/2;i++) {
 			hex_xor += hex_stream.str();
@@ -111,16 +114,16 @@ void xor_helper::print_candidates(unsigned short possible_char[], std::string en
         	}
 
             if (byte_hex < 32 || byte_hex > 126) {
-                weirdness += 5;
+                weirdness += 2;
             }
         	ss1 << (char)byte_hex;
         }
         ss1 << std::endl;
         // Edit this weirdness value based on results
-        if (weirdness<2) {
+        if (weirdness<3) {
             std::cout << "encrypted_hex: " << encrypted_hex << std::endl;
             std::cout << "Decryption: " << ss1.str();
-            std::cout << "Encryption character: " << (char)possible_char[j] << std::endl;
+            std::cout << "Encryption byte: " << possible_char[j] << std::endl;
             std::cout << "weirdness: " << weirdness << std::endl;
        	}
 	}

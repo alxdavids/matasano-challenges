@@ -8,10 +8,9 @@ int main(int argc, char** argv) {
 
 	int *count = x.produce_count_array(encrypted_hex);
 
-	unsigned short possible_char[26] = {0};
-	for (char i='A'; i<='Z'; i++) {
-		unsigned short z = i - 0;
-		possible_char[z-65] = z;
+	unsigned short possible_char[256] = {0};
+	for (unsigned short i=0; i<256; i++) {
+		possible_char[i] = i;
 	}
 
 	x.print_candidates(possible_char, encrypted_hex, len);
